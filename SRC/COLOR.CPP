@@ -1,4 +1,5 @@
 #include "COLOR.H"
+#include <float.h>
 #include <math.h>
 
 #define F(x) ((float)x)
@@ -333,7 +334,7 @@ unsigned char rgb2vga(int r, int g, int b) {
     float gf = (float)g;
     float bf = (float)b;
 
-  	float closest = +HUGE_VAL;
+  	float closest = FLT_MAX;
   	int ndx = 0;
  
   	for (int i = 0; i < 248; i++) {
