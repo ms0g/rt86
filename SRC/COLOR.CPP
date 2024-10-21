@@ -329,7 +329,10 @@ static const float ndx_vgapal[256][3] = {
 };
 
 unsigned char rgb2vga(int r, int g, int b) {
-  	float rf = (float)r, gf = (float)g, bf = (float)b;
+  	float rf = (float)r;
+    float gf = (float)g;
+    float bf = (float)b;
+    
   	float closest = +HUGE_VAL;
   	int ndx = 0;
  
