@@ -4,9 +4,7 @@
 void normalize(vec3& v) {
     float length = invLen(v);
     
-    v.x *= length;
-    v.y *= length;
-    v.z *= length;
+    v *= length;
 }
 
 float invLen(const vec3& v) {
