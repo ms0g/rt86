@@ -332,7 +332,7 @@ unsigned char rgb2vga(int r, int g, int b) {
   	float rf = (float)r;
     float gf = (float)g;
     float bf = (float)b;
-    
+
   	float closest = +HUGE_VAL;
   	int ndx = 0;
  
@@ -355,7 +355,7 @@ unsigned char rgb2vga(int r, int g, int b) {
   	return (unsigned char)ndx;
 }
 
-unsigned char pixel2Vga(const color& pixel) {
+unsigned char pixel2vga(const color& pixel) {
     float r = pixel.x;
     float g = pixel.y;
     float b = pixel.z;

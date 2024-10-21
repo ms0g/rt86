@@ -14,7 +14,7 @@ void main(void) {
         for (int x = 0; x < WIDTH; ++x) {
             color pixelColor = color((float)x / (WIDTH-1), (float)y / (HEIGHT-1), 0.0);
             
-			_putpixel(x, y, pixel2Vga(pixelColor));
+			_putpixel(x, y, pixel2vga(pixelColor));
         }
     }
 

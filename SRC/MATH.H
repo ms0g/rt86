@@ -1,17 +1,15 @@
 #ifndef MATH_H
 #define MATH_H
 
-#include <math.h>
-
-inline int absf(int v) {
+inline int abs(int v) {
     return v < 0 ? 0 - v : v;
 }
 
-inline int ceilf(float v) {
+inline int ceil(float v) {
     return (int)v + 1;
 } 
 
-inline int floorf(float v) {
+inline int floor(float v) {
     return (int)v;
 }
 
@@ -20,7 +18,7 @@ inline int signbit(float v) {
 }
 
 inline int round(float v) {
-    return signbit(v) ? ceilf(v - 0.5) : floorf(v + 0.5);
+    return signbit(v) ? ceil(v - 0.5) : floor(v + 0.5);
 }
 
 inline int min(int n0, int n1) {
