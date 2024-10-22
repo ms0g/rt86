@@ -1,38 +1,24 @@
 #include <conio.h>
-#include <math.h>
+#include <float.h>
 #include "COLOR.H"
 #include "VGA.H"
 #include "RAY.H"
 #include "VEC3.H"
+#include "SCENE.H"
+#include "SPHERE.H"
 
 #define WIDTH 320
 #define HEIGHT 200
 
-float hitSphere(const vec3& center, float radius, const Ray& r) {
-    vec3 oc = center - r.origin();
-    float a = dot(r.direction(), r.direction());
-    float h = dot(r.direction(), oc);
-    float c = dot(oc, oc) - radius*radius;
-    float discriminant = h * h - a * c;
-
-    if (discriminant < 0) {
-        return -1.0;
-    }
-    
-    return (h - sqrt(discriminant)) / a;
-}
-
-color rayColor(const Ray& ray) {
-    float t = hitSphere(vec3(0, 0, -1), 0.5, ray);
-    
-    if (t > 0.0) {
-        vec3 N = unit(ray.at(t) - vec3(0, 0, -1));
-        return color(N.x+1, N.y+1, N.z+1) * 0.5;
+color rayColor(const Ray& ray, const Scene& scene) {
+    HitRecord rec;
+    if (scene.hit(ray, 0, FLT_MAX, rec)) {
+        return (rec.normal + color(1,1,1)) * 0.5;
     }
 
     vec3 unit_direction = unit(ray.direction());
-    float a = 0.5*(unit_direction.y + 1.0);
-    return color(1.0, 1.0, 1.0)*(1.0-a) + color(0.5, 0.7, 1.0)*a;
+    float a = 0.5 * (unit_direction.y + 1.0);
+    return color(1.0, 1.0, 1.0)*(1.0 - a) + color(0.5, 0.7, 1.0) * a;
 }
 
 void main(void) {
@@ -42,6 +28,12 @@ void main(void) {
     // Calculate the image height, and ensure that it's at least 1.
     int image_height = (int)(image_width / aspect_ratio);
     image_height = (image_height < 1) ? 1 : image_height;
+
+    // World
+
+    Scene scene;
+    scene.add(new Sphere(vec3(0,0,-1), 0.5));
+    scene.add(new Sphere(vec3(0,-100.5,-1), 100));
 
     // Camera
 
@@ -72,7 +64,7 @@ void main(void) {
             vec3 ray_direction = pixel_center - camera_center;
             Ray ray(camera_center, ray_direction);
 
-            color pixelColor = rayColor(ray);
+            color pixelColor = rayColor(ray, scene);
 			_putpixel(x, y, pixel2vga(pixelColor));
         }
     }
