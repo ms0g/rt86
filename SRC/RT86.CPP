@@ -1,4 +1,5 @@
 #include <conio.h>
+#include <math.h>
 #include "COLOR.H"
 #include "VGA.H"
 #include "RAY.H"
@@ -7,18 +8,27 @@
 #define WIDTH 320
 #define HEIGHT 200
 
-int hitSphere(const vec3& center, float radius, const Ray& r) {
+float hitSphere(const vec3& center, float radius, const Ray& r) {
     vec3 oc = center - r.origin();
     float a = dot(r.direction(), r.direction());
-    float b = -2.0 * dot(r.direction(), oc);
+    float h = dot(r.direction(), oc);
     float c = dot(oc, oc) - radius*radius;
-    float discriminant = b*b - 4*a*c;
-    return (discriminant >= 0);
+    float discriminant = h * h - a * c;
+
+    if (discriminant < 0) {
+        return -1.0;
+    }
+    
+    return (h - sqrt(discriminant)) / a;
 }
 
 color rayColor(const Ray& ray) {
-    if (hitSphere(vec3(0,0,-1), 0.5, ray))
-        return color(1, 0, 0);
+    float t = hitSphere(vec3(0, 0, -1), 0.5, ray);
+    
+    if (t > 0.0) {
+        vec3 N = unit(ray.at(t) - vec3(0, 0, -1));
+        return color(N.x+1, N.y+1, N.z+1) * 0.5;
+    }
 
     vec3 unit_direction = unit(ray.direction());
     float a = 0.5*(unit_direction.y + 1.0);
