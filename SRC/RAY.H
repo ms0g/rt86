@@ -13,7 +13,7 @@ public:
     
     const vec3& direction() const { return mDirection; }
 
-    vec3 at(float t) {
+    vec3 at(float t) const {
         return mOrigin + (mDirection * t);
     }
 

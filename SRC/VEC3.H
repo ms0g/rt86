@@ -22,11 +22,11 @@ struct vec3 {
         return vec3(x - other.x,  y - other.y, z - other.z);
     }
 
-    vec3 operator*(const vec3& other) {
+    vec3 operator*(const vec3& other) const {
         return vec3(x * other.x, y * other.y, z * other.z);
     }
 
-    vec3 operator*(float n) {
+    vec3 operator*(float n) const {
         return vec3(x * n, y * n, z * n);
     }
 
