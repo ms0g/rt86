@@ -3,8 +3,7 @@
 
 #include "RAY.H"
 
-class HitRecord {
-public:
+struct HitRecord {
     vec3 p;
     vec3 normal;
     float t;

@@ -2,9 +2,7 @@
 #include "MATH.H"
 
 void normalize(vec3& v) {
-    float length = invLen(v);
-    
-    v *= length;
+    v *= invLen(v);
 }
 
 float invLen(const vec3& v) {

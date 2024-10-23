@@ -2,8 +2,7 @@
 #define SPHERE_H
 
 #include "SCENEOBJ.H"
-
-#define fmax( n0,  n1) (n0 > n1) ? n0 : n1
+#include "MATH.H"
 
 class Sphere: public SceneObject {
 public:
