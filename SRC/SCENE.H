@@ -7,7 +7,9 @@
 class Scene: public SceneObject {
 public:
     Scene() {}
+
     Scene(SceneObject* object) { add(object); }
+    
     ~Scene();
     
     void clear() { objects.clear(); }
