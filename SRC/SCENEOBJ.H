@@ -2,8 +2,7 @@
 #define SCENEOBJ_H
 
 #include "RAY.H"
-
-enum bool {false, true};
+#include "BOOL.H"
 
 struct HitRecord {
     vec3 p;
