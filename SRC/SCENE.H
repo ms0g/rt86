@@ -16,7 +16,7 @@ public:
 
     void add(SceneObject* object) { objects.push_back(object); }
 
-    int hit(const Ray& ray, float rayTmin, float rayTmax, HitRecord& rec) const;
+    bool hit(const Ray& ray, float rayTmin, float rayTmax, HitRecord& rec) const;
 
 private:
     vector<SceneObject*> objects;

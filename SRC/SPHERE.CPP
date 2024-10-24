@@ -1,7 +1,7 @@
 #include "SPHERE.H"
 #include <math.h>
 
-int Sphere::hit(const Ray& ray, float rayTmin, float rayTmax, HitRecord& rec) const {
+bool Sphere::hit(const Ray& ray, float rayTmin, float rayTmax, HitRecord& rec) const {
     vec3 oc = mCenter - ray.origin();
     float a = dot(ray.direction(), ray.direction());
     float h = dot(ray.direction(), oc);
@@ -9,7 +9,7 @@ int Sphere::hit(const Ray& ray, float rayTmin, float rayTmax, HitRecord& rec) co
     float discriminant = h * h - a * c;
     
     if (discriminant < 0)
-        return 0;
+        return false;
 
     float sqrtd = sqrt(discriminant);
 
@@ -18,7 +18,7 @@ int Sphere::hit(const Ray& ray, float rayTmin, float rayTmax, HitRecord& rec) co
     if (root <= rayTmin || rayTmax <= root) {
         root = (h + sqrtd) / a;
         if (root <= rayTmin || rayTmax <= root)
-            return 0;
+            return false;
     }
 
     rec.t = root;
@@ -27,5 +27,5 @@ int Sphere::hit(const Ray& ray, float rayTmin, float rayTmax, HitRecord& rec) co
     vec3 outwardNormal = (rec.p - mCenter) / mRadius;
     rec.setFaceNormal(ray, outwardNormal);
 
-    return 1;
+    return true;
 }
