@@ -1,6 +1,9 @@
 #include "CAMERA.H"
+#include "UTILS.H"
 
-Camera::Camera(float aspectRatio, int imageWidth): mAspectRatio(aspectRatio), mImageWidth(imageWidth)  {
+Camera::Camera(float aspectRatio, int imageWidth): 
+    mAspectRatio(aspectRatio), 
+    mImageWidth(imageWidth) {
     mImageHeight = (int)(mImageWidth / mAspectRatio);
     mImageHeight = (mImageHeight < 1) ? 1 : mImageHeight;
 
@@ -22,6 +25,20 @@ Camera::Camera(float aspectRatio, int imageWidth): mAspectRatio(aspectRatio), mI
     mPixel00Loc = viewportUpperLeft + (mPixelDeltaU + mPixelDeltaV) * 0.5;
 }
 
-vec3 Camera::pixelCenter(int x, int y) {
-    return  mPixel00Loc + (mPixelDeltaU * x) + (mPixelDeltaV * y);
+Ray Camera::getRay(int x, int y) const {
+    // Construct a camera ray originating from the origin and directed at randomly sampled
+    // point around the pixel location i, j.
+
+    vec3 offset = sampleSquare();
+    vec3 pixelSample = mPixel00Loc + (mPixelDeltaU * (x + offset.x)) + (mPixelDeltaV * (y + offset.y));
+
+    vec3 rayOrig = mCenter;
+    vec3 rayDir = pixelSample - rayOrig;
+
+    return Ray(rayOrig, rayDir);
+}
+
+vec3 Camera::sampleSquare() const {
+    // Returns the vector to a random point in the [-.5,-.5]-[+.5,+.5] unit square.
+    return vec3(randf() - 0.5, randf() - 0.5, 0);
 }

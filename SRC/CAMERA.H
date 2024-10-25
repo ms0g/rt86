@@ -2,6 +2,7 @@
 #define CAMERA_H
 
 #include "VEC3.H"
+#include "RAY.H"
 
 class Camera {
 public:
@@ -9,16 +10,18 @@ public:
 
     vec3 center() const { return mCenter; }
     
-    vec3 pixelCenter(int x, int y);
+    Ray getRay(int x, int y) const;
 
 private:
+    vec3 sampleSquare() const;
+
     float mAspectRatio;
     int mImageWidth;  
-    int mImageHeight;   // Rendered image height
-    vec3 mCenter;       // Camera center
-    vec3 mPixel00Loc;   // Location of pixel 0, 0
-    vec3 mPixelDeltaU; // Offset to pixel to the right
-    vec3 mPixelDeltaV; // Offset to pixel below
+    int mImageHeight;           // Rendered image height
+    vec3 mCenter;               // Camera center
+    vec3 mPixel00Loc;           // Location of pixel 0, 0
+    vec3 mPixelDeltaU;          // Offset to pixel to the right
+    vec3 mPixelDeltaV;          // Offset to pixel below
 
 };
 

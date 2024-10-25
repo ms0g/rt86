@@ -10,6 +10,8 @@
 
 #define WIDTH 320
 #define HEIGHT 200
+#define SAMPLES_PER_PIXEL 75
+#define ASPECT_RATIO 4.0 / 3.0
 
 color rayColor(const Ray& ray, const Scene& scene) {
     HitRecord rec;
@@ -27,7 +29,7 @@ void main(void) {
     scene.add(new Sphere(vec3(0,0,-1), 0.5));
     scene.add(new Sphere(vec3(0,-100.5,-1), 100));
 
-    Camera cam(16.0 / 9.0, 400);
+    Camera cam(ASPECT_RATIO, WIDTH);
    
     _initMode(MODE_VGA_13H);
 
@@ -35,12 +37,14 @@ void main(void) {
 
     for (int y = 0; y < HEIGHT; ++y) {
         for (int x = 0; x < WIDTH; ++x) {
-            vec3 pixcent = cam.pixelCenter(x, y);
-            vec3 raydir = pixcent - cam.center();
-            Ray ray(cam.center(), raydir);
-
-            color pixelColor = rayColor(ray, scene);
-			_putpixel(x, y, pixel2vga(pixelColor));
+            color pixelColor(0, 0, 0);
+            
+            for (int i = 0; i < SAMPLES_PER_PIXEL; ++i) {
+                Ray r = cam.getRay(x, y);
+                pixelColor += rayColor(r, scene);
+            }
+            
+            _putpixel(x, y, pixel2vga(pixelColor * (1.0 / SAMPLES_PER_PIXEL)));
         }
     }
 

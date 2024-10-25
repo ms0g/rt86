@@ -1,6 +1,7 @@
 #include "COLOR.H"
 #include <float.h>
 #include <math.h>
+#include "UTILS.H"
 
 #define F(x) ((float)x)
 
@@ -362,9 +363,9 @@ unsigned char pixel2vga(const color& pixel) {
     float b = pixel.z;
 
     // Translate the [0,1] component values to the byte range [0,255].
-    int rbyte = (int)(255.999 * r);
-    int gbyte = (int)(255.999 * g);
-    int bbyte = (int)(255.999 * b);
+    int rbyte = (int)(256 * clamp(r, 0.000, 0.999));
+    int gbyte = (int)(256 * clamp(g, 0.000, 0.999));
+    int bbyte = (int)(256 * clamp(b, 0.000, 0.999));
 
     return rgb2vga(rbyte, gbyte, bbyte);
 }
