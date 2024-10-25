@@ -35,9 +35,9 @@ void main(void) {
 
     for (int y = 0; y < HEIGHT; ++y) {
         for (int x = 0; x < WIDTH; ++x) {
-            vec3 pixel_center = cam.pixelCenter(x, y);
-            vec3 ray_direction = pixel_center - cam.center();
-            Ray ray(cam.center(), ray_direction);
+            vec3 pixcent = cam.pixelCenter(x, y);
+            vec3 raydir = pixcent - cam.center();
+            Ray ray(cam.center(), raydir);
 
             color pixelColor = rayColor(ray, scene);
 			_putpixel(x, y, pixel2vga(pixelColor));
