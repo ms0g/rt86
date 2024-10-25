@@ -23,7 +23,7 @@ class SceneObject {
 public:
     virtual ~SceneObject() {}
 
-    virtual bool hit(const Ray& ray, float rayTmin, float rayTmax, HitRecord& rec) const = 0;
+    virtual bool hit(const Ray& ray, float tmin, float tmax, HitRecord& rec) const = 0;
 };
 
 #endif

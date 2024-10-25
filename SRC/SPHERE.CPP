@@ -1,7 +1,7 @@
 #include "SPHERE.H"
 #include <math.h>
 
-bool Sphere::hit(const Ray& ray, float rayTmin, float rayTmax, HitRecord& rec) const {
+bool Sphere::hit(const Ray& ray, float tmin, float tmax, HitRecord& rec) const {
     vec3 oc = mCenter - ray.origin();
     float a = dot(ray.direction(), ray.direction());
     float h = dot(ray.direction(), oc);
@@ -15,9 +15,9 @@ bool Sphere::hit(const Ray& ray, float rayTmin, float rayTmax, HitRecord& rec) c
 
     // Find the nearest root that lies in the acceptable range.
     float root = (h - sqrtd) / a;
-    if (root <= rayTmin || rayTmax <= root) {
+    if (root <= tmin || tmax <= root) {
         root = (h + sqrtd) / a;
-        if (root <= rayTmin || rayTmax <= root)
+        if (root <= tmin || tmax <= root)
             return false;
     }
 

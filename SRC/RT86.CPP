@@ -19,7 +19,7 @@ color rayColor(const Ray& ray, const Scene& scene) {
 
     vec3 unitDir = unit(ray.direction());
     float a = 0.5 * (unitDir.y + 1.0);
-    return color(1.0, 1.0, 1.0)*(1.0 - a) + color(0.5, 0.7, 1.0) * a;
+    return color(1.0, 1.0, 1.0) * (1.0 - a) + color(0.5, 0.7, 1.0) * a;
 }
 
 void main(void) {

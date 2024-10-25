@@ -6,13 +6,13 @@ Scene::~Scene() {
     }
 }
 
- bool Scene::hit(const Ray& ray, float rayTmin, float rayTmax, HitRecord& rec) const {
+ bool Scene::hit(const Ray& ray, float tmin, float tmax, HitRecord& rec) const {
     HitRecord tempRec;
     bool hitAnything = false;
-    float closestSoFar = rayTmax;
+    float closestSoFar = tmax;
 
     for (int i = 0; i < objects.size(); ++i) {
-        if (objects[i]->hit(ray, rayTmin, closestSoFar, tempRec)) {
+        if (objects[i]->hit(ray, tmin, closestSoFar, tempRec)) {
             hitAnything = true;
             closestSoFar = tempRec.t;
             rec = tempRec;
