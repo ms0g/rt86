@@ -4,11 +4,11 @@
 #define M_PI 3.14159265358979323846
 
 static inline int min(int n0, int n1) {
-    return (n0 < n1) ? n0 : n1;
+    return n1 ^ ((n0 ^ n1) & -(n0 < n1));
 } 
 
 static inline int max(int n0, int n1) {
-    return (n0 > n1) ? n0 : n1;
+    return n1 ^ ((n0 ^ n1) & -(n0 > n1));
 } 
 
 static inline float fmin(float n0, float n1) {
