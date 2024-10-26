@@ -13,11 +13,17 @@
 #define SAMPLES_PER_PIXEL 75
 #define PIXEL_SAMPLES_SCALE 1.0 / SAMPLES_PER_PIXEL
 #define ASPECT_RATIO 4.0 / 3.0
+#define MAX_DEPTH 50
 
-color rayColor(const Ray& ray, const Scene& scene) {
+color rayColor(const Ray& ray, int depth, const Scene& scene) {
+    if (depth <= 0) {
+        return color(0, 0, 0);
+    }
+
     HitRecord rec;
-    if (scene.hit(ray, 0, FLT_MAX, rec)) {
-        return (rec.normal + color(1, 1, 1)) * 0.5;
+    if (scene.hit(ray, 0.001, FLT_MAX, rec)) {
+        vec3 direction = randomOnHemisphere(rec.normal);
+        return rayColor(Ray(rec.p, direction), depth - 1, scene) * 0.5;
     }
 
     vec3 unitDir = unit(ray.direction());
@@ -42,7 +48,7 @@ void main(void) {
             
             for (int i = 0; i < SAMPLES_PER_PIXEL; ++i) {
                 Ray r = cam.getRay(x, y);
-                pixelColor += rayColor(r, scene);
+                pixelColor += rayColor(r, MAX_DEPTH, scene);
             }
             
             _putpixel(x, y, pixel2vga(pixelColor * PIXEL_SAMPLES_SCALE));
