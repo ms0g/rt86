@@ -11,6 +11,7 @@
 #define WIDTH 320
 #define HEIGHT 200
 #define SAMPLES_PER_PIXEL 75
+#define PIXEL_SAMPLES_SCALE 1.0 / SAMPLES_PER_PIXEL
 #define ASPECT_RATIO 4.0 / 3.0
 
 color rayColor(const Ray& ray, const Scene& scene) {
@@ -44,7 +45,7 @@ void main(void) {
                 pixelColor += rayColor(r, scene);
             }
             
-            _putpixel(x, y, pixel2vga(pixelColor * (1.0 / SAMPLES_PER_PIXEL)));
+            _putpixel(x, y, pixel2vga(pixelColor * PIXEL_SAMPLES_SCALE));
         }
     }
 
