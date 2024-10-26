@@ -1,5 +1,6 @@
 #include "VEC3.H"
 #include "MATH.H"
+#include "BOOL.H"
 
 void normalize(vec3& v) {
     v *= invLen(v);
@@ -32,4 +33,32 @@ vec3 cross(const vec3& v0, const vec3& v1) {
 
 vec3 unit(const vec3& v) {
     return v * invLen(v);
+}
+
+vec3 random() {
+    return vec3(randf(), randf(), randf());
+}
+
+vec3 random(float min, float max) {
+    return vec3(randf(min, max), randf(min, max), randf(min, max));
+}
+
+vec3 randomUnitVec() {
+    while (true) {
+        vec3 p = random(-1, 1);
+        float lensq = p.x * p.x + p.y * p.y + p.z * p.z;
+        
+        if (1e-160 < lensq && lensq <= 1) {
+            return unit(p);
+        }      
+    }
+}
+
+vec3 randomOnHemisphere(const vec3& normal) {
+    vec3 onUnitSphere = randomUnitVec();
+    
+    if (dot(onUnitSphere, normal) > 0.0) // In the same hemisphere as the normal
+        return onUnitSphere;
+    
+    return -onUnitSphere;
 }

@@ -64,4 +64,12 @@ vec3 cross(const vec3& v0, const vec3& v1);
 
 vec3 unit(const vec3& v);
 
+vec3 random();
+
+vec3 random(float min, float max);
+
+vec3 randomUnitVec();
+
+vec3 randomOnHemisphere(const vec3& normal);
+
 #endif
