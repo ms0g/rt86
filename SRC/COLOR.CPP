@@ -1,7 +1,7 @@
 #include "COLOR.H"
 #include <float.h>
 #include <math.h>
-#include "UTILS.H"
+#include "MATH.H"
 
 #define F(x) ((float)x)
 

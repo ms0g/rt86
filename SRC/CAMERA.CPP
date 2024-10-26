@@ -1,5 +1,5 @@
 #include "CAMERA.H"
-#include "UTILS.H"
+#include "MATH.H"
 
 Camera::Camera(float aspectRatio, int imageWidth): 
     mAspectRatio(aspectRatio), 

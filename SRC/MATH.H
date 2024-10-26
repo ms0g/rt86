@@ -1,6 +1,8 @@
 #ifndef MATH_H
 #define MATH_H
 
+#include <stdlib.h>
+
 #define M_PI 3.14159265358979323846
 
 static inline int min(int n0, int n1) {
@@ -21,6 +23,14 @@ static inline float fmax(float n0, float n1) {
 
 static inline float degree2radian(float angle) {
     return angle * M_PI / 180.0;
+}
+
+static inline float clamp(float v, float lo, float hi) {
+    return v < lo ? lo: v > hi ? hi:v;
+}
+
+static inline float randf() {
+    return rand() / (RAND_MAX + 1.0);
 }
 
 double invSqrt(double n);
