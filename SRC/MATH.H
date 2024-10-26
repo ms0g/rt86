@@ -33,6 +33,10 @@ static inline float randf() {
     return rand() / (RAND_MAX + 1.0);
 }
 
+static inline float randf(float min, float max) {
+    return min + (max - min) * randf();
+}
+
 double invSqrt(double n);
 
 #endif
