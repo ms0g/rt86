@@ -5,6 +5,10 @@
 
 #define M_PI 3.14159265358979323846
 
+static inline float fabs(float n) {
+    return n < 0.0 ? 0.0 - n : n;
+}
+
 static inline int min(int n0, int n1) {
     return n1 ^ ((n0 ^ n1) & -(n0 < n1));
 } 
