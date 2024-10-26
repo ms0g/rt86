@@ -1,5 +1,7 @@
 #ifndef VEC_H
 #define VEC_H
+
+#include "BOOL.H"
  
 struct vec3 {
     float x;
@@ -60,6 +62,8 @@ float invLen(const vec3& v);
 
 float dot(const vec3& v0, const vec3& v1);
 
+bool nearZero(const vec3& v);
+
 vec3 cross(const vec3& v0, const vec3& v1);
 
 vec3 unit(const vec3& v);
@@ -71,5 +75,7 @@ vec3 random(float min, float max);
 vec3 randomUnitVec();
 
 vec3 randomOnHemisphere(const vec3& normal);
+
+vec3 reflect(const vec3& v, const vec3& n);
 
 #endif

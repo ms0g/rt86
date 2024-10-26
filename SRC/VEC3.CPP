@@ -2,6 +2,8 @@
 #include "MATH.H"
 #include "BOOL.H"
 
+#define S 1e-8
+
 void normalize(vec3& v) {
     v *= invLen(v);
 }
@@ -19,6 +21,11 @@ void sadd(vec3& v, float scalar) {
 float dot(const vec3& v0, const vec3& v1) {
     return v0.x * v1.x + v0.y * v1.y + v0.z * v1.z;
 
+}
+
+bool nearZero(const vec3& v) {
+    // Return true if the vector is close to zero in all dimensions.
+    return (bool)((fabs(v.x) < S) && (fabs(v.y) < S) && (fabs(v.z) < S));
 }
 
 vec3 cross(const vec3& v0, const vec3& v1) {
@@ -61,4 +68,8 @@ vec3 randomOnHemisphere(const vec3& normal) {
         return onUnitSphere;
     
     return -onUnitSphere;
+}
+
+vec3 reflect(const vec3& v, const vec3& n) {
+    return v - n * 2 * dot(v, n);
 }
