@@ -4,9 +4,11 @@
 #include "RAY.H"
 #include "BOOL.H"
 
+class Material;
 struct HitRecord {
     vec3 p;
     vec3 normal;
+    Material* mat;
     float t;
     bool frontFace;
 

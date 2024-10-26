@@ -7,6 +7,7 @@
 #include "SCENE.H"
 #include "SPHERE.H"
 #include "CAMERA.H"
+#include "MATERIAL.H"
 
 #define WIDTH 320
 #define HEIGHT 200
@@ -22,8 +23,13 @@ color rayColor(const Ray& ray, int depth, const Scene& scene) {
 
     HitRecord rec;
     if (scene.hit(ray, 0.001, FLT_MAX, rec)) {
-        vec3 direction = rec.normal + randomUnitVec();;
-        return rayColor(Ray(rec.p, direction), depth - 1, scene) * 0.1;
+        Ray scattered;
+        color attenuation;
+        if (rec.mat->scatter(ray, rec, attenuation, scattered)) {
+            return attenuation * rayColor(scattered, depth - 1, scene);
+        }
+       
+        return color(0, 0, 0);
     }
 
     vec3 unitDir = unit(ray.direction());
@@ -33,8 +39,10 @@ color rayColor(const Ray& ray, int depth, const Scene& scene) {
 
 void main(void) {
     Scene scene;
-    scene.add(new Sphere(vec3(0,0,-1), 0.5));
-    scene.add(new Sphere(vec3(0,-100.5,-1), 100));
+    scene.add(new Sphere(vec3( 0.0, -100.5, -1.0), 100.0, new Lambertian(color(0.8, 0.8, 0.0)))); // Ground
+    scene.add(new Sphere(vec3( 0.0,    0.0, -1.2),   0.5, new Lambertian(color(0.1, 0.2, 0.5)))); // Center
+    scene.add(new Sphere(vec3(-1.0,    0.0, -1.0),   0.5, new Metal(color(0.8, 0.8, 0.8)))); // Left
+    scene.add(new Sphere(vec3( 1.0,    0.0, -1.0),   0.5, new Metal(color(0.8, 0.6, 0.2)))); // Right
 
     Camera cam(ASPECT_RATIO, WIDTH);
    

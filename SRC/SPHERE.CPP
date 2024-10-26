@@ -1,5 +1,10 @@
 #include "SPHERE.H"
 #include <math.h>
+#include "MATERIAL.H"
+
+Sphere::~Sphere() {
+    delete mMat;
+}
 
 bool Sphere::hit(const Ray& ray, float tmin, float tmax, HitRecord& rec) const {
     vec3 oc = mCenter - ray.origin();
@@ -26,6 +31,7 @@ bool Sphere::hit(const Ray& ray, float tmin, float tmax, HitRecord& rec) const {
     
     vec3 outwardNormal = (rec.p - mCenter) / mRadius;
     rec.setFaceNormal(ray, outwardNormal);
+    rec.mat = mMat;
 
     return true;
 }
