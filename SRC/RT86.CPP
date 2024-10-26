@@ -22,7 +22,7 @@ color rayColor(const Ray& ray, int depth, const Scene& scene) {
 
     HitRecord rec;
     if (scene.hit(ray, 0.001, FLT_MAX, rec)) {
-        vec3 direction = randomOnHemisphere(rec.normal);
+        vec3 direction = rec.normal + randomUnitVec();;
         return rayColor(Ray(rec.p, direction), depth - 1, scene) * 0.5;
     }
 
