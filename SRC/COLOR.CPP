@@ -362,10 +362,21 @@ unsigned char pixel2vga(const color& pixel) {
     float g = pixel.y;
     float b = pixel.z;
 
+	r = linear2gamma(r);
+	g = linear2gamma(g);
+	b = linear2gamma(b);
+
     // Translate the [0,1] component values to the byte range [0,255].
     int rbyte = (int)(256 * clamp(r, 0.000, 0.999));
     int gbyte = (int)(256 * clamp(g, 0.000, 0.999));
     int bbyte = (int)(256 * clamp(b, 0.000, 0.999));
 
     return rgb2vga(rbyte, gbyte, bbyte);
+}
+
+float linear2gamma(float linearComponent) {
+	if (linearComponent > 0)
+        return sqrt(linearComponent);
+
+    return 0;
 }
