@@ -9,6 +9,10 @@ public:
     virtual ~Material() {}
 
     virtual bool scatter(const Ray& in, const HitRecord& rec, color& attenuation, Ray& scattered) const {
+        (void)in;
+        (void)rec;
+        (void)attenuation;
+        (void)scattered;
         return false;
     }
 };
@@ -18,6 +22,7 @@ public:
     Lambertian(const color& albedo) : albedo(albedo) {}
 
     virtual bool scatter(const Ray& in, const HitRecord& rec, color& attenuation, Ray& scattered) const {
+        (void)in;
         vec3 scatterDir = rec.normal + randomUnitVec();
 
         // Catch degenerate scatter direction
