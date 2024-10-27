@@ -2,8 +2,6 @@
 #include "MATH.H"
 #include "BOOL.H"
 
-#define S 1e-8
-
 void normalize(vec3& v) {
     v *= invLen(v);
 }
@@ -25,7 +23,7 @@ float dot(const vec3& v0, const vec3& v1) {
 
 bool nearZero(const vec3& v) {
     // Return true if the vector is close to zero in all dimensions.
-    return (bool)((fabs(v.x) < S) && (fabs(v.y) < S) && (fabs(v.z) < S));
+    return (bool)((fabs(v.x) < 1e-8) && (fabs(v.y) < 1e-8) && (fabs(v.z) < 1e-8));
 }
 
 vec3 cross(const vec3& v0, const vec3& v1) {
