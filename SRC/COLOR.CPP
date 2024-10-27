@@ -362,6 +362,7 @@ unsigned char pixel2vga(const color& pixel) {
     float g = pixel.y;
     float b = pixel.z;
 
+	// Apply a linear to gamma transform for gamma 2
 	r = linear2gamma(r);
 	g = linear2gamma(g);
 	b = linear2gamma(b);
