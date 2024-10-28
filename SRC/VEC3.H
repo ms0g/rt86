@@ -32,7 +32,7 @@ struct vec3 {
         return vec3(x * n, y * n, z * n);
     }
 
-    vec3 operator/(float n) {
+    vec3 operator/(float n) const {
         return *this * (1/n);
     }
 
@@ -60,6 +60,8 @@ void normalize(vec3& v);
 
 float invLen(const vec3& v);
 
+float lenSquared(const vec3& v);
+
 float dot(const vec3& v0, const vec3& v1);
 
 bool nearZero(const vec3& v);
@@ -77,5 +79,7 @@ vec3 randomUnitVec();
 vec3 randomOnHemisphere(const vec3& normal);
 
 vec3 reflect(const vec3& v, const vec3& n);
+
+vec3 refract(const vec3& uv, const vec3& n, float etaiOverEtat);
 
 #endif

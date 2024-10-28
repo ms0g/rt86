@@ -1,5 +1,4 @@
 #include "SPHERE.H"
-#include <math.h>
 #include "MATERIAL.H"
 
 Sphere::~Sphere() {

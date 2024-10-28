@@ -7,7 +7,11 @@ void normalize(vec3& v) {
 }
 
 float invLen(const vec3& v) {
-    return invSqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+    return invSqrt(lenSquared(v));
+}
+
+float lenSquared(const vec3& v) {
+    return v.x * v.x + v.y * v.y + v.z * v.z;
 }
 
 void sadd(vec3& v, float scalar) {
@@ -70,4 +74,13 @@ vec3 randomOnHemisphere(const vec3& normal) {
 
 vec3 reflect(const vec3& v, const vec3& n) {
     return v - n * 2 * dot(v, n);
+}
+
+vec3 refract(const vec3& uv, const vec3& n, float etaiOverEtat) {
+    float cos_theta = fmin(dot(-uv, n), 1.0);
+    vec3 rayOutPerp = (uv + n * cos_theta) * etaiOverEtat;
+        
+    vec3 rayOutParallel = n / -invSqrt(fabs(1.0 - lenSquared(rayOutPerp)));
+    
+    return rayOutPerp + rayOutParallel;
 }
