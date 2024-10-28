@@ -41,7 +41,8 @@ void main(void) {
     Scene scene;
     scene.add(new Sphere(vec3( 0.0, -100.5, -1.0), 100.0, new Lambertian(color(0.8, 0.8, 0.0))));   // Ground
     scene.add(new Sphere(vec3( 0.0, 0.0, -1.2), 0.5, new Lambertian(color(0.1, 0.2, 0.5))));        // Center
-    scene.add(new Sphere(vec3(-1.0, 0.0, -1.0), 0.5, new Metal(color(0.8, 0.8, 0.8), 0.3)));        // Left
+    scene.add(new Sphere(vec3(-1.0, 0.0, -1.0), 0.5, new Dielectric(1.50)));                        // Left
+    scene.add(new Sphere(vec3(-1.0, 0.0, -1.0), 0.4, new Dielectric(1.00 / 1.50)));                 // Bubble   
     scene.add(new Sphere(vec3( 1.0, 0.0, -1.0), 0.5, new Metal(color(0.8, 0.6, 0.2), 0.3)));        // Right
 
     Camera cam(ASPECT_RATIO, WIDTH);
