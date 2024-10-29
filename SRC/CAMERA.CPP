@@ -1,28 +1,39 @@
 #include "CAMERA.H"
 #include "MATH.H"
 
-Camera::Camera(float aspectRatio, int imageWidth): 
-    mAspectRatio(aspectRatio), 
-    mImageWidth(imageWidth) {
-    mImageHeight = (int)(mImageWidth / mAspectRatio);
-    mImageHeight = (mImageHeight < 1) ? 1 : mImageHeight;
+Camera::Camera(float aspectRatio, float vfov, float defocusAngle, float focusDist, int imageWidth, vec3 lookfrom, vec3 lookat, vec3 vup) {
+    int imageHeight = (int)(imageWidth / aspectRatio);
+    imageHeight = (imageHeight < 1) ? 1 : imageHeight;
+    
+    mCenter = lookfrom;
+    mDefocusAngle = defocusAngle;
+    
+    float theta = degree2radian(vfov);
+    float h = tan(theta/2);
+    float viewportHeight = 2.0 * h * focusDist;
+    float viewportWidth = viewportHeight * ((float)imageWidth/imageHeight);
 
-    float focalLength = 1.0;
-    float viewportHeight = 2.0;
-    float viewportWidth = viewportHeight * ((float)mImageWidth/mImageHeight);
-    mCenter = vec3(0, 0, 0);
+     // Calculate the u,v,w unit basis vectors for the camera coordinate frame.
+    vec3 w = unit(lookfrom - lookat);
+    vec3 u = unit(cross(vup, w));
+    vec3 v = cross(w, u);
 
     // Calculate the vectors across the horizontal and down the vertical viewport edges.
-    vec3 viewport_u = vec3(viewportWidth, 0, 0);
-    vec3 viewport_v = vec3(0, -viewportHeight, 0);
+    vec3 viewport_u = u * viewportWidth;
+    vec3 viewport_v = v * -viewportHeight;
 
     // Calculate the horizontal and vertical delta vectors from pixel to pixel.
-    mPixelDeltaU = viewport_u / mImageWidth;
-    mPixelDeltaV = viewport_v / mImageHeight;
+    mPixelDeltaU = viewport_u / imageWidth;
+    mPixelDeltaV = viewport_v / imageHeight;
 
     // Calculate the location of the upper left pixel.
-    vec3 viewportUpperLeft = mCenter - vec3(0, 0, focalLength) - viewport_u/2 - viewport_v/2;
+    vec3 viewportUpperLeft = mCenter - w * focusDist - (viewport_u + viewport_v) * 0.5;
     mPixel00Loc = viewportUpperLeft + (mPixelDeltaU + mPixelDeltaV) * 0.5;
+
+    // Calculate the camera defocus disk basis vectors.
+    float defocusRadius = focusDist * tan(degree2radian(defocusAngle / 2));
+    mDefocusDiskU = u * defocusRadius;
+    mDefocusDiskV = v * defocusRadius;
 }
 
 Ray Camera::getRay(int x, int y) const {
@@ -32,7 +43,7 @@ Ray Camera::getRay(int x, int y) const {
     vec3 offset = sampleSquare();
     vec3 pixelSample = mPixel00Loc + (mPixelDeltaU * (x + offset.x)) + (mPixelDeltaV * (y + offset.y));
 
-    vec3 rayOrig = mCenter;
+    vec3 rayOrig = (mDefocusAngle <= 0) ? mCenter : defocusDiskSample();;
     vec3 rayDir = pixelSample - rayOrig;
 
     return Ray(rayOrig, rayDir);
@@ -41,4 +52,10 @@ Ray Camera::getRay(int x, int y) const {
 vec3 Camera::sampleSquare() const {
     // Returns the vector to a random point in the [-.5,-.5]-[+.5,+.5] unit square.
     return vec3(randf() - 0.5, randf() - 0.5, 0);
+}
+
+vec3 Camera::defocusDiskSample() const {
+    // Returns a random point in the camera defocus disk.
+    vec3 p = randomInUnitDisk();
+    return mCenter + (mDefocusDiskU * p.x) + (mDefocusDiskV * p.y);
 }
