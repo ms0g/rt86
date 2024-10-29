@@ -2,7 +2,7 @@
 ## Overview
 RT86 is a ray tracing engine designed to run on MS-DOS, leveraging the simplicity and constraints of retro computing. The project explores low-level graphics programming and brings modern rendering techniques into the world of 16-bit DOS systems. With RT86, you can witness fundamental concepts like ray-object intersection, reflections, refractions and lighting – all from within a nostalgic DOS environment.
 
-<img src="IMG/rtraced.png" alt="image" width="402" height="auto">
+<img src="IMG/rtraced.png" alt="image" width="700" height="auto">
 
 ## Features
 + `Anti-Aliasing:` Smooths pixelated edges for more visually pleasing results.
