@@ -55,11 +55,19 @@ vec3 random(float min, float max) {
 vec3 randomUnitVec() {
     while (true) {
         vec3 p = random(-1, 1);
-        float lensq = p.x * p.x + p.y * p.y + p.z * p.z;
+        float lensq = lenSquared(p);
         
         if (1e-160 < lensq && lensq <= 1) {
             return unit(p);
         }      
+    }
+}
+
+vec3 randomInUnitDisk() {
+    while (true) {
+        vec3 p = vec3(randf(-1,1), randf(-1,1), 0);
+        if (lenSquared(p) < 1)
+            return p;
     }
 }
 

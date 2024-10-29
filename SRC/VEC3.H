@@ -76,6 +76,8 @@ vec3 random(float min, float max);
 
 vec3 randomUnitVec();
 
+vec3 randomInUnitDisk();
+
 vec3 randomOnHemisphere(const vec3& normal);
 
 vec3 reflect(const vec3& v, const vec3& n);
