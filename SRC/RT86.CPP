@@ -77,9 +77,7 @@ void main(void) {
     }
 
     scene.add(new Sphere(vec3(0, 1, 0), 1.0, new Dielectric(1.5)));
-
     scene.add(new Sphere(vec3(-4, 1, 0), 1.0, new Lambertian(color(0.4, 0.2, 0.1))));
-
     scene.add(new Sphere(vec3(4, 1, 0), 1.0, new Metal(color(0.7, 0.6, 0.5), 0.0)));
 
     Camera cam(ASPECT_RATIO, VFOV, DEFOCUS_ANGLE, FOCUS_DIST, WIDTH, LOOKFROM, LOOKAT, VUP);
