@@ -15,13 +15,13 @@
 #define PIXEL_SAMPLES_SCALE 1.0 / SAMPLES_PER_PIXEL
 #define MAX_DEPTH 50
 // Camera Settings
-#define ASPECT_RATIO 4.0 / 3.0
-#define VFOV 20
-#define DEFOCUS_ANGLE 0.6
-#define FOCUS_DIST 10.0
-#define LOOKFROM    vec3(13,2,3)
-#define LOOKAT      vec3(0,0,0)
-#define VUP         vec3(0,1,0)
+#define ASPECT_RATIO    4.0 / 3.0
+#define VFOV            20
+#define DEFOCUS_ANGLE   0.6
+#define FOCUS_DIST      10.0
+#define VUP             vec3(0, 1, 0)
+#define LOOKFROM        vec3(13, 2, 3)
+#define LOOKAT          vec3(0, 0, 0)
 
 color rayColor(const Ray& ray, int depth, const Scene& scene) {
     if (depth <= 0) {
@@ -46,7 +46,7 @@ color rayColor(const Ray& ray, int depth, const Scene& scene) {
 
 void main(void) {
     Scene scene;
-    scene.add(new Sphere(vec3( 0.0, -100, -1.0), 100.0, new Lambertian(color(0.5, 0.5, 0.5))));   // Ground
+    scene.add(new Sphere(vec3(0.0, -1000, 0.0), 1000.0, new Lambertian(color(0.5, 0.5, 0.5))));   // Ground
     
     for (int a = -11; a < 11; a++) {
         for (int b = -11; b < 11; b++) {
