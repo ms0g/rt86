@@ -2,7 +2,7 @@
 #include <float.h>
 #include "MATH.H"
 
-#define F(x) ((float)x)
+#define F(n) ((float)n)
 
 static const float ndx_vgapal[256][3] = {
     /* colors 0-15 */
@@ -335,7 +335,7 @@ unsigned char rgb2vga(int r, int g, int b) {
     float bf = (float)b;
 
   	float closest = FLT_MAX;
-  	int ndx = 0;
+  	int index = 0;
  
   	for (int i = 0; i < 248; i++) {
 		const float* sample = ndx_vgapal[i];
@@ -346,14 +346,14 @@ unsigned char rgb2vga(int r, int g, int b) {
     	
 		if (closest > dst) {
         	closest = dst;
-        	ndx = i;
+        	index = i;
       	} else if (dst < 0.05) {
-        	ndx = i;
+        	index = i;
         	break;
       	}
   	}
 
-  	return (unsigned char)ndx;
+  	return (unsigned char)index;
 }
 
 unsigned char pixel2vga(const color& pixel) {

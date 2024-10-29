@@ -90,7 +90,7 @@ private:
         // Use Schlick's approximation for reflectance.
         float r0 = (1 - refractionIndex) / (1 + refractionIndex);
         r0 = r0 * r0;
-        return r0 + (1 - r0) * pow((1 - cosine),5);
+        return r0 + (1 - r0) * pow((1 - cosine), 5);
     }
 };
 
