@@ -5,13 +5,23 @@ RT86 is a ray tracing engine designed to run on MS-DOS, leveraging the simplicit
 <img src="IMG/rtraced.png" alt="image" width="700" height="auto">
 
 ## Features
-+ `Anti-Aliasing:` Smooths pixelated edges for more visually pleasing results.
++ `Anti-Aliasing:` Smoothens the output by averaging multiple rays per pixel to reduce jagged edges and produce high-quality visuals.
 + `Sphere Rendering:` Basic ray-sphere intersection for rendering smooth surfaces.
-+ `Refraction & Reflection:` Simulates glass-like transparency and realistic mirror effects.
++ `Refraction & Reflection:` Simulates transparent materials like glass with Snell’s Law and internal reflection. Materials scatter or reflect light based on surface properties.
++ `Defocus Blur:` Simulates depth of field by casting rays from slightly offset origins, mimicking a camera lens's behavior to create blurred backgrounds for added realism.
 + `Recursive Ray Tracing:` Supports multiple reflection and refraction bounces for lifelike visuals.
 + `Camera System:` Simulates a basic camera with a configurable viewport and field of view.
 + `Multiple Objects:` Ability to add multiple spheres with distinct materials.
 + `Fixed Palette Output:` Optimized for VGA graphics (320x200 resolution, 256 colors).
+
+## How It Works
+
+RT86 uses ray tracing techniques to render scenes by simulating the behavior of light. For each pixel, the engine performs:
+
++ Each pixel casts a ray into the scene.
++ If a ray hits an object, the engine determines how the light interacts with the surface.
++ Reflection and refraction rays are recursively traced for realistic lighting and transparency effects.
++ Multiple rays per pixel enable anti-aliasing and defocus blur for high-quality output.
 
 ## Prerequisites
 + Turbo C++ (>= 3.0)
@@ -29,5 +39,4 @@ C:\TC\BIN>RT86.EXE
 This project is licensed under the MIT License. See the LICENSE file for details.
 
 ## Credits
-
-Developed by M. Sami Gürpınar
+This is based on [RT One Week](https://raytracing.github.io/books/RayTracingInOneWeekend.html)
