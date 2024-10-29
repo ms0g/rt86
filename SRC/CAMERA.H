@@ -8,8 +8,6 @@ class Camera {
 public:
     Camera(float aspectRatio = 1.0, float vfov = 90, float defocusAngle = 0, float focusDist = 10,
         int imageWidth = 100, vec3 lookfrom = vec3(0,0,0), vec3 lookat = vec3(0,0,-1), vec3 vup = vec3(0,1,0));
-
-    vec3 center() const { return mCenter; }
     
     Ray getRay(int x, int y) const;
 

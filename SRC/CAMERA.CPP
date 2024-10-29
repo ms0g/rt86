@@ -38,7 +38,7 @@ Camera::Camera(float aspectRatio, float vfov, float defocusAngle, float focusDis
 
 Ray Camera::getRay(int x, int y) const {
     // Construct a camera ray originating from the origin and directed at randomly sampled
-    // point around the pixel location i, j.
+    // point around the pixel location x, y.
 
     vec3 offset = sampleSquare();
     vec3 pixelSample = mPixel00Loc + (mPixelDeltaU * (x + offset.x)) + (mPixelDeltaV * (y + offset.y));
