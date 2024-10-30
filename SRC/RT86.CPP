@@ -29,7 +29,7 @@ color rayColor(const Ray& ray, int depth, const Scene& scene) {
     }
 
     HitRecord rec;
-    if (scene.hit(ray, 0.001, FLT_MAX, rec)) {
+    if (scene.hit(ray, 0.001, DBL_MAX, rec)) {
         Ray scattered;
         color attenuation;
         if (rec.mat->scatter(ray, rec, attenuation, scattered)) {
@@ -40,7 +40,7 @@ color rayColor(const Ray& ray, int depth, const Scene& scene) {
     }
 
     vec3 unitDir = unit(ray.direction());
-    float a = 0.5 * (unitDir.y + 1.0);
+    double a = 0.5 * (unitDir.y + 1.0);
     return color(1.0, 1.0, 1.0) * (1.0 - a) + color(0.5, 0.7, 1.0) * a;
 }
 
@@ -50,8 +50,8 @@ void main(void) {
     
     for (int a = -11; a < 11; a++) {
         for (int b = -11; b < 11; b++) {
-            float choose_mat = randf();
-            vec3 center(a + 0.9 * randf(), 0.2, b + 0.9 * randf());
+            double choose_mat = randd();
+            vec3 center(a + 0.9 * randd(), 0.2, b + 0.9 * randd());
 
             if (pow(invLen(center - vec3(4, 0.2, 0)), -1) > 0.9) {
                 Material* sphere_material;
@@ -64,7 +64,7 @@ void main(void) {
                 } else if (choose_mat < 0.95) {
                     // metal
                     vec3 albedo = random(0.5, 1);
-                    float fuzz = randf(0, 0.5);
+                    double fuzz = randd(0, 0.5);
                     sphere_material = new Metal(albedo, fuzz);
                     scene.add(new Sphere(center, 0.2, sphere_material));
                 } else {

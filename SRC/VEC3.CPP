@@ -6,21 +6,21 @@ void normalize(vec3& v) {
     v *= invLen(v);
 }
 
-float invLen(const vec3& v) {
+double invLen(const vec3& v) {
     return invSqrt(lenSquared(v));
 }
 
-float lenSquared(const vec3& v) {
+double lenSquared(const vec3& v) {
     return v.x * v.x + v.y * v.y + v.z * v.z;
 }
 
-void sadd(vec3& v, float scalar) {
+void sadd(vec3& v, double scalar) {
     v.x += scalar;
     v.y += scalar;
     v.z += scalar;
 }
 
-float dot(const vec3& v0, const vec3& v1) {
+double dot(const vec3& v0, const vec3& v1) {
     return v0.x * v1.x + v0.y * v1.y + v0.z * v1.z;
 
 }
@@ -45,17 +45,17 @@ vec3 unit(const vec3& v) {
 }
 
 vec3 random() {
-    return vec3(randf(), randf(), randf());
+    return vec3(randd(), randd(), randd());
 }
 
-vec3 random(float min, float max) {
-    return vec3(randf(min, max), randf(min, max), randf(min, max));
+vec3 random(double min, double max) {
+    return vec3(randd(min, max), randd(min, max), randd(min, max));
 }
 
 vec3 randomUnitVec() {
     while (true) {
         vec3 p = random(-1, 1);
-        float lensq = lenSquared(p);
+        double lensq = lenSquared(p);
         
         if (1e-160 < lensq && lensq <= 1) {
             return unit(p);
@@ -65,7 +65,7 @@ vec3 randomUnitVec() {
 
 vec3 randomInUnitDisk() {
     while (true) {
-        vec3 p = vec3(randf(-1,1), randf(-1,1), 0);
+        vec3 p = vec3(randd(-1,1), randd(-1,1), 0);
         if (lenSquared(p) < 1)
             return p;
     }
@@ -84,8 +84,8 @@ vec3 reflect(const vec3& v, const vec3& n) {
     return v - n * 2 * dot(v, n);
 }
 
-vec3 refract(const vec3& uv, const vec3& n, float etaiOverEtat) {
-    float cos_theta = fmin(dot(-uv, n), 1.0);
+vec3 refract(const vec3& uv, const vec3& n, double etaiOverEtat) {
+    double cos_theta = fmin(dot(-uv, n), 1.0);
     vec3 rayOutPerp = (uv + n * cos_theta) * etaiOverEtat;
         
     vec3 rayOutParallel = n / -invSqrt(fabs(1.0 - lenSquared(rayOutPerp)));

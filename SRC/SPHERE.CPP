@@ -5,20 +5,20 @@ Sphere::~Sphere() {
     delete mMat;
 }
 
-bool Sphere::hit(const Ray& ray, float tmin, float tmax, HitRecord& rec) const {
+bool Sphere::hit(const Ray& ray, double tmin, double tmax, HitRecord& rec) const {
     vec3 oc = mCenter - ray.origin();
-    float a = dot(ray.direction(), ray.direction());
-    float h = dot(ray.direction(), oc);
-    float c = dot(oc, oc) - mRadius * mRadius;
-    float discriminant = h * h - a * c;
+    double a = dot(ray.direction(), ray.direction());
+    double h = dot(ray.direction(), oc);
+    double c = dot(oc, oc) - mRadius * mRadius;
+    double discriminant = h * h - a * c;
     
     if (discriminant < 0)
         return false;
 
-    float sqrtd = sqrt(discriminant);
+    double sqrtd = sqrt(discriminant);
 
     // Find the nearest root that lies in the acceptable range.
-    float root = (h - sqrtd) / a;
+    double root = (h - sqrtd) / a;
     if (root <= tmin || tmax <= root) {
         root = (h + sqrtd) / a;
         if (root <= tmin || tmax <= root)

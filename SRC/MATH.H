@@ -6,7 +6,7 @@
 
 #define M_PI 3.14159265358979323846
 
-static inline float fabs(float n) {
+static inline double fabs(double n) {
     return n < 0.0 ? 0.0 - n : n;
 }
 
@@ -18,28 +18,28 @@ static inline int max(int n0, int n1) {
     return n1 ^ ((n0 ^ n1) & -(n0 > n1));
 } 
 
-static inline float fmin(float n0, float n1) {
+static inline double fmin(double n0, double n1) {
     return (n0 < n1) ? n0 : n1;
 }
 
-static inline float fmax(float n0, float n1) {
+static inline double fmax(double n0, double n1) {
     return (n0 > n1) ? n0 : n1;
 }
 
-static inline float degree2radian(float angle) {
+static inline double degree2radian(double angle) {
     return angle * M_PI / 180.0;
 }
 
-static inline float clamp(float v, float lo, float hi) {
+static inline double clamp(double v, double lo, double hi) {
     return v < lo ? lo: v > hi ? hi:v;
 }
 
-static inline float randf() {
+static inline double randd() {
     return rand() / (RAND_MAX + 1.0);
 }
 
-static inline float randf(float min, float max) {
-    return min + (max - min) * randf();
+static inline double randd(double min, double max) {
+    return min + (max - min) * randd();
 }
 
 double invSqrt(double n);

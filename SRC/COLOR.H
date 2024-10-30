@@ -9,6 +9,6 @@ unsigned char rgb2vga(int r, int g, int b);
 
 unsigned char pixel2vga(const color& pixel);
 
-float linear2gamma(float linearComponent);
+double linear2gamma(double linearComponent);
 
 #endif

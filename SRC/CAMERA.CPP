@@ -1,17 +1,17 @@
 #include "CAMERA.H"
 #include "MATH.H"
 
-Camera::Camera(float aspectRatio, float vfov, float defocusAngle, float focusDist, int imageWidth, vec3 lookfrom, vec3 lookat, vec3 vup) {
+Camera::Camera(double aspectRatio, double vfov, double defocusAngle, double focusDist, int imageWidth, vec3 lookfrom, vec3 lookat, vec3 vup) {
     int imageHeight = (int)(imageWidth / aspectRatio);
     imageHeight = (imageHeight < 1) ? 1 : imageHeight;
     
     mCenter = lookfrom;
     mDefocusAngle = defocusAngle;
     
-    float theta = degree2radian(vfov);
-    float h = tan(theta/2);
-    float viewportHeight = 2.0 * h * focusDist;
-    float viewportWidth = viewportHeight * ((float)imageWidth/imageHeight);
+    double theta = degree2radian(vfov);
+    double h = tan(theta/2);
+    double viewportHeight = 2.0 * h * focusDist;
+    double viewportWidth = viewportHeight * ((double)imageWidth/imageHeight);
 
      // Calculate the u,v,w unit basis vectors for the camera coordinate frame.
     vec3 w = unit(lookfrom - lookat);
@@ -31,7 +31,7 @@ Camera::Camera(float aspectRatio, float vfov, float defocusAngle, float focusDis
     mPixel00Loc = viewportUpperLeft + (mPixelDeltaU + mPixelDeltaV) * 0.5;
 
     // Calculate the camera defocus disk basis vectors.
-    float defocusRadius = focusDist * tan(degree2radian(defocusAngle / 2));
+    double defocusRadius = focusDist * tan(degree2radian(defocusAngle / 2));
     mDefocusDiskU = u * defocusRadius;
     mDefocusDiskV = v * defocusRadius;
 }
@@ -51,7 +51,7 @@ Ray Camera::getRay(int x, int y) const {
 
 vec3 Camera::sampleSquare() const {
     // Returns the vector to a random point in the [-.5,-.5]-[+.5,+.5] unit square.
-    return vec3(randf() - 0.5, randf() - 0.5, 0);
+    return vec3(randd() - 0.5, randd() - 0.5, 0);
 }
 
 vec3 Camera::defocusDiskSample() const {

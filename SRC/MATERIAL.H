@@ -42,7 +42,7 @@ private:
 
 class Metal: public Material {
 public:
-    Metal(const color& albedo, float fuzz) : albedo(albedo), mFuzz(fuzz < 1 ? fuzz: 1) {}
+    Metal(const color& albedo, double fuzz) : albedo(albedo), mFuzz(fuzz < 1 ? fuzz: 1) {}
 
     virtual bool scatter(const Ray& in, const HitRecord& rec, color& attenuation, Ray& scattered) const {
         vec3 reflected = reflect(in.direction(), rec.normal);
@@ -54,26 +54,26 @@ public:
 
 private:
     color albedo;
-    float mFuzz;
+    double mFuzz;
 };
 
 class Dielectric: public Material {
 public:
-    Dielectric(float refractionIndex) : mRefractionIndex(refractionIndex) {}
+    Dielectric(double refractionIndex) : mRefractionIndex(refractionIndex) {}
 
     virtual bool scatter(const Ray& in, const HitRecord& rec, color& attenuation, Ray& scattered) const {
         // the glass surface absorbs nothing.
         attenuation = color(1.0, 1.0, 1.0);
         
-        float ri = rec.frontFace ? (1.0 / mRefractionIndex) : mRefractionIndex;
+        double ri = rec.frontFace ? (1.0 / mRefractionIndex) : mRefractionIndex;
 
         vec3 unitDir = unit(in.direction());
-        float cosTheta = fmin(dot(-unitDir, rec.normal), 1.0);
-        float invSinTheta = invSqrt(1.0 - cosTheta * cosTheta);
+        double cosTheta = fmin(dot(-unitDir, rec.normal), 1.0);
+        double invSinTheta = invSqrt(1.0 - cosTheta * cosTheta);
         bool cannotRefract = (bool)(ri / invSinTheta > 1.0);
 
         vec3 dir;
-        if (cannotRefract || reflectance(cosTheta, ri) > randf()) {
+        if (cannotRefract || reflectance(cosTheta, ri) > randd()) {
             dir = reflect(unitDir, rec.normal);
         } else {
             dir = refract(unitDir, rec.normal, ri);
@@ -84,11 +84,11 @@ public:
     }
 
 private:
-    float mRefractionIndex;
+    double mRefractionIndex;
 
-    float reflectance(float cosine, float refractionIndex) const {
+    double reflectance(double cosine, double refractionIndex) const {
         // Use Schlick's approximation for reflectance.
-        float r0 = (1 - refractionIndex) / (1 + refractionIndex);
+        double r0 = (1 - refractionIndex) / (1 + refractionIndex);
         r0 = r0 * r0;
         return r0 + (1 - r0) * pow((1 - cosine), 5);
     }

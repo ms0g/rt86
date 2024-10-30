@@ -9,7 +9,7 @@ struct HitRecord {
     vec3 p;
     vec3 normal;
     Material* mat;
-    float t;
+    double t;
     bool frontFace;
 
     void setFaceNormal(const Ray& ray, const vec3& outwardNormal) {
@@ -25,7 +25,7 @@ class SceneObject {
 public:
     virtual ~SceneObject() {}
 
-    virtual bool hit(const Ray& ray, float tmin, float tmax, HitRecord& rec) const = 0;
+    virtual bool hit(const Ray& ray, double tmin, double tmax, HitRecord& rec) const = 0;
 };
 
 #endif
